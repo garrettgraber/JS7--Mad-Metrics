@@ -1,0 +1,160 @@
+h1 {
+
+	display: inline-block;
+	
+}
+
+p {
+	padding: 10px;
+	
+}
+
+.page-header-container {
+
+    width:100%;
+    position: absolute;
+	display:inline-block;
+    top: 0;
+	margin: 0 auto;
+	z-index: 5;
+
+
+}
+
+
+.page-header {
+
+	background-color: cyan;
+	opacity: 0.7;
+	position:fixed;
+	height: 98px;
+	width: 100%;
+	
+/*	
+	border-style: solid;
+	border-radius: 5px;
+	border-color: black;
+	
+	border-left-width: 20px;
+*/
+	
+}
+
+#main {
+	background-color: Crimson;
+/*
+	width: 960px;
+*/
+	width: 70%;
+	position: relative;
+	margin: 0 auto;
+	height: 4000px;
+	top: 90px;
+	z-index: 1;
+	padding: 10px;
+
+}
+
+.side-box-wrapper  {
+
+/*
+	width: 200px;
+*/
+	width: 15%;
+	position: absolute;
+	right: -200px;
+	top: 90px;
+}
+
+.side-box-right {
+
+	right: -143px;
+	/*
+	margin-left: 10px;
+	*/
+
+}
+
+.side-box-left {
+
+	left: -202px;
+	margin-right: 10px;
+	
+}
+
+.side-box {
+
+/*
+	width: 200px;
+*/
+
+	width: 15%;
+
+	height: 100%;
+	position: fixed;
+	background-color: blue;
+	color: white;
+	text-align: center;
+	padding-top: 15px;
+	
+}
+
+.side-text-display {
+
+	padding-left: 10px;
+	padding-right: 10px;
+	
+}
+
+.input-zone {
+
+	margin-left: auto;
+	margin-right: auto;
+
+	width: 70%;
+	height: 500px;
+	background-color: #7CFC00;
+	color: black;
+	
+}
+
+.button-shit {
+
+	margin-bottom: 20px;
+	margin-top: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 60%;
+	height: 80px;
+	display: block;
+	background-color: black;
+	color: white;
+	border: 4px solid white;
+	/*
+	box-shadow:  3px 6px 9px white;
+	
+	box-shadow: inset -5px -5px 1px white;
+	*/
+}
+
+.button-nav {
+
+	width: 10%;
+	height: 50px;
+	margin-left: 30px;
+	display: inline;
+	background-color: black;
+	color: white;
+	
+}
+
+.button-alert {
+	background-color: red;
+}
+
+.testy {
+
+	height: 300px;
+	
+}
+
