@@ -1,0 +1,76 @@
+
+
+#main-container {
+	width: 800px;
+	height: 1600px;
+	margin: 0 auto;
+	background-color: SeaGreen;	
+}
+
+.container {
+	height: 25%;
+	width: 100%;
+	text-align: center;
+	bottom: 0;
+	
+}
+
+#box2 {
+	background-color: SkyBlue;
+}
+
+#box3 {
+	background-color: Silver;
+}
+
+#box4 {
+	background-color: Teal;
+}
+
+.fire-button {
+
+	height: 50px;
+	width: 30%;
+	background-color: DeepPink;
+	padding: 5px;
+	margin: 20px;
+	margin-top: 40px;
+	font-weight: bold;
+}
+
+.metric-button {
+	padding: 5px;
+	height: 90px;
+	width: 90px;
+	background-color: white;
+	color: black;
+	margin: 20px;
+	padding: 5px;
+	border: 6px solid Gold;
+}
+
+#sign-up-button {
+	background-color: red;
+	border: 6px solid white;
+}
+
+.text-section {
+	padding: 20px;
+}
+
+.side-box-wrapper {
+	position: relative;
+	float: right;
+	right: 0;
+}
+
+.side-box {
+	position: fixed;
+	background-color: black;
+/*	height: 400px;*/
+
+	text-align: center;
+	height: 100%;	
+	width: 200px;
+	/*top: 100px;*/
+}
