@@ -41,6 +41,35 @@ $(document).on('ready', function() {
 		return idArray;
 	};
 
+	var populateIDs = function(tagName) {
+	  	var idArray = [];
+	  	var idCounter = Math.floor(Math.random()*20000) + 10000;
+	  	
+		fullTagObj = $(tagName).find('*');
+		fullTagObj.each(function() {
+		var id = $( this ).attr( "id" );
+
+		if (id !== undefined) {
+			if (typeof(id) === "string") {
+				$(this).addClass('mouse-here');
+				idArray.push(id);
+			}
+			else {
+				console.log('what the hell');
+			}
+		}
+		else {
+			idUse = "zz" + idCounter.toString();
+			$(this).attr("id", idUse);
+			$(this).addClass('mouse-here');
+			idArray.push(idUse);
+			idCounter += 1;
+		}
+		});
+		console.log("ID's tagged");
+		return idArray;
+	};
+
 	
 	var createDictWithKeys = function(inList, initialValue) {
 		var tempDict = {};
@@ -107,7 +136,7 @@ $(document).on('ready', function() {
 	};
 	
 	//find document ids and create a dictionary with them as the keys
-	var idTotalArray = findIDs('body');
+	var idTotalArray = populateIDs('body');
 	var mouseInDict = createDictWithKeys(idTotalArray, 0);
 	var mouseEntryDict = createDictWithKeys(idTotalArray, 0);
 	var mouseDictDispaly = displayDict(mouseInDict);

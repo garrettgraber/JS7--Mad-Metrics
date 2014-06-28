@@ -3,7 +3,7 @@ $(document).on('ready', function() {
 	var startTime = $.now();
 	var startTImeBase = startTime;
 
-	var populateIDs = function(tagName) {
+	var  = function(tagName) {
 	  	var idArray = [];
 	  	var idCounter = Math.floor(Math.random()*20000) + 10000;
 	  	
