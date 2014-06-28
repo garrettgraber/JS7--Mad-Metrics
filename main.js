@@ -13,8 +13,21 @@ $(document).on('ready', function() {
 		var totalUserView = windowHeight + windowScroll;
 		var percentViewed = ( totalUserView / totalPageHeight ) * 100.0;
 		var percentViewedRound = percentViewed.toFixed(2);
-		alert("Percentage of the page viewed: " + percentViewed + ' %');
+		return "Percentage of the page viewed: " + percentViewed + ' %';
 	};
+
+	var timeOnPage = function() {
+		var timeArray = timeChangeFunc(startTImeBase);
+		var timeString = formatTimeOfDay( timeArray[ 0 ] );
+		return 'Total time on the page: ' +  timeString + ' s';
+	};
+
+	var startUpLastPushed = function () {
+		var timeArrayTemp = timeChangeFunc(startTime);
+		var timeString = formatTimeOfDay( timeArrayTemp[ 0 ] );
+		startTime = timeArrayTemp[ 1 ];
+		return 'Total time since signup: ' +  timeString + ' s';
+	}
 
 	var findIDs = function(tagName) {
 	  	var idArray = [];
@@ -44,7 +57,7 @@ $(document).on('ready', function() {
 		for (var key in inDict) {
 			var timeValue = inDict[ key ];
 			timeValue = formatTimeOfDay(timeValue);
-			var tempString = "Area: " + key + ";  Time in area: " + timeValue + " s\n";
+			var tempString = "Area ID:  " + key + ";    Time in area: " + timeValue + " s\n";
 			outString = outString + tempString;
 		}
 		return outString;
@@ -67,6 +80,30 @@ $(document).on('ready', function() {
 	  return hours + (minutes < 10 ? ":0" : ":")
 		  + minutes + (seconds < 10 ? ":0" : ":")
 		  + seconds;
+	};
+
+	var distanceScrolled = function() {
+		var windowHeight = $(window).height();
+		var docHeight = $(document).height()
+		var scrollHeightWin = $(window).scrollTop();
+		var scrollHeightDoc = $(document).scrollTop();
+		console.log('window height= ' + windowHeight);
+		console.log('document height= ' + docHeight);
+		console.log('scroll height window= ' + scrollHeightWin);
+		console.log('scroll height document= ' + scrollHeightDoc);
+		console.log('total amount scrolled in px= ' + totalScrollState);
+		return "Total number of pixels scrolled: " + totalScrollState + ' px';
+	};
+
+	var appendHeadPara = function(tempJquery, runFunction) {
+		var outString = runFunction();
+		var tempHeading = $('<h2>');
+		var tempParagraph = $('<p>');
+		tempParagraph.addClass('mouse-text-section');
+		tempParagraph.html(outString);
+		tempHeading.appendTo( tempJquery );
+		tempParagraph.appendTo( tempJquery );
+		return tempJquery;
 	};
 	
 	//find document ids and create a dictionary with them as the keys
@@ -125,12 +162,14 @@ $(document).on('ready', function() {
 		var differenceScrollValue = Math.abs(currentScrollValue - scrollState);
 		scrollState = currentScrollValue;
 		totalScrollState = differenceScrollValue + totalScrollState;
-		console.log('Let me ride...');
 
 	});
 
 	$('#distance-scroll-button').click(function() {
 
+		alert(distanceScrolled());
+
+		/*
 		var windowHeight = $(window).height();
 		var docHeight = $(document).height()
 		var scrollHeightWin = $(window).scrollTop();
@@ -141,49 +180,94 @@ $(document).on('ready', function() {
 		console.log('scroll height document= ' + scrollHeightDoc);
 		console.log('total amount scrolled in px= ' + totalScrollState);
 		alert('total amount scrolled in pixels: ' + totalScrollState + 'px');
-
+*/
 	});
 
-	$('#page-view-button').on('click', pageTotalViewed );
+	$('#page-view-button').click(function() {
+		alert(pageTotalViewed());
+	});
 
 	$('#sign-up-button').click(function() {
-
-		var timeArrayTemp = timeChangeFunc(startTime);
-		var timeString = formatTimeOfDay( timeArrayTemp[ 0 ] );
-		alert('Total Milliseconds since signup: ' +  timeString + ' s');
-		startTime = timeArrayTemp[ 1 ];
-		
+		alert(startUpLastPushed());
 	});
 
 	$('#time-on-page-button').click(function() {
-		
-		var timeArray = timeChangeFunc(startTImeBase);
-		var timeString = formatTimeOfDay( timeArray[ 0 ] );
-		alert('Total Milliseconds since page open: ' + timeString + ' s');
-		
+		alert(timeOnPage());
 	});
 
 	$('#mouse-stats-button').click(function() {
-
 		var outString = displayDict(mouseInDict);
 		console.log(outString);
 		alert(outString);
-
 	});
 
 	$('#mouse-info-button').click(function() {
-		alert('Mouse stuff');
 		var tempJquery = $('<div>').attr('class', 'mouse-details-box');
 		var tempButton = $('<button>');
+
 		tempButton.addClass('mouse-dialog-button metric-button');
 		tempButton.text('Exit');
+
+		var tempHeading = $('<h2>');
+		tempHeading.css('font-weight', 'bold');
+		tempHeading.text('Mouse movement statics');
 		var outString = displayDict(mouseInDict);
 		outString = outString.replace(/(?:\r\n|\r|\n)/g, '<br>');
-		tempParagraph = $('<p>');
+		var tempParagraph = $('<p>');
+		tempParagraph.addClass('mouse-text-section');
 		tempParagraph.html(outString);
+		tempHeading.appendTo( tempJquery );
 		tempParagraph.appendTo( tempJquery );
 		tempButton.appendTo( tempJquery );
+
+		/*
+
+		var distanceScroll = distanceScrolled();
+		var outString = "Distance scrolled: " + distanceScroll + " px";
+		var tempHeading2 = $('<h2>');
+		var tempParagraph2 = $('<p>');
+		tempParagraph2.addClass('mouse-text-section');
+		tempParagraph2.html(outString);
+
+		var outString = pageTotalViewed();
+		var tempHeading3 = $('<h2>');
+		var tempParagraph3 = $('<p>');
+		tempParagraph3.addClass('mouse-text-section');
+		tempParagraph3.html(outString);
+
+		var outString = timeOnPage();
+		var tempHeading4 = $('<h2>');
+		var tempParagraph4 = $('<p>');
+		tempParagraph4.addClass('mouse-text-section');
+		tempParagraph4.html(outString);
+
+		var outString = startUpLastPushed();
+		var tempHeading5 = $('<h2>');
+		var tempParagraph5 = $('<p>');
+		tempParagraph5.addClass('mouse-text-section');
+		tempParagraph5.html(outString);
+
+		tempHeading.appendTo( tempJquery );
+		tempParagraph.appendTo( tempJquery );
+		tempButton.appendTo( tempJquery );
+		tempHeading2.appendTo( tempJquery );
+		tempParagraph2.appendTo( tempJquery );
+		tempHeading3.appendTo( tempJquery );
+		tempParagraph3.appendTo( tempJquery );
+		tempHeading4.appendTo( tempJquery );
+		tempParagraph4.appendTo( tempJquery );
+		tempHeading5.appendTo( tempJquery );
+		tempParagraph5.appendTo( tempJquery );
+
+		*/
+
+		tempJquery = appendHeadPara(tempJquery, distanceScrolled);
+		tempJquery = appendHeadPara(tempJquery, pageTotalViewed);
+		tempJquery = appendHeadPara(tempJquery, timeOnPage);
+		tempJquery = appendHeadPara(tempJquery, startUpLastPushed);
+
 		tempJquery.prependTo('#main-container');
+
 	});
 
 	$(document).on('click', '.mouse-dialog-button', function() {

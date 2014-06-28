@@ -85,7 +85,7 @@
 
 .mouse-details-box {
 
-	position: fixed;
+	position: absolute;
 	background-color: black;
 	color: white;
 	width: 70%;
@@ -96,11 +96,16 @@
 	z-index: 9999;
 	border: 3px solid white;
 	right: 15%;
-	padding: 20px;
+	padding: 30px;
 }
 
 .mouse-dialog-button {
 	position: relative;
 	float: right;
 	bottom: 0;
+}
+
+.mouse-text-section {
+	display: inline-block;
+	font-weight: bold;
 }
