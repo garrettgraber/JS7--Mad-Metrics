@@ -272,7 +272,7 @@ $(document).on('ready', function() {
 		tempButton.text('Exit');
 
 		var tempHeading = $('<h2>');
-		tempHeading.css({fontWeight:'bold', display:'inline'});
+		tempHeading.css({font-weight:'bold', display:'inline'});
 		tempHeading.text('Mouse movement statics');
 		var outString = displayDict(mouseInDict);
 		outString = outString.replace(/(?:\r\n|\r|\n)/g, '<br>');
