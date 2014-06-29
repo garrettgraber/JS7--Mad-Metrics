@@ -6,3 +6,19 @@
 	display: inline-block;
 	margin: 10px;
 }
+
+.blue-color {
+    background-color: blue;
+}
+
+.green-color {
+    background-color: green;
+}
+
+.black-color {
+    background-color: black;
+}
+
+.yellow-color {
+    background-color: yellow;
+}

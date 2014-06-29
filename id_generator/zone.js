@@ -1,8 +1,7 @@
 $(document).on('ready', function() {
-
 	var startTime = $.now();
 	var startTImeBase = startTime;
-
+    var consoleLogging = true;
 	var findIDs = function(tagName) {
 	  	var idArray = [];
 		fullTagObj = $(tagName).find('*');
@@ -15,14 +14,10 @@ $(document).on('ready', function() {
 		return idArray;
 	};
 
-    
     var idValueStatus = function(id, tempstring) {
-
         var idArtificalStatus;
-        var tempstring = tempstring + "    ;  Artifically created ID: ";
-
+        var tempstring = tempstring + ";  Artifically created ID: ";
         (id.slice(0,2) === 'zz')? (idArtificalStatus = true): (idArtificalStatus = false);
-
         /*
         if (id.slice(0,2) === 'zz')?  {
             idArtificalStatus = true;
@@ -31,7 +26,6 @@ $(document).on('ready', function() {
             idArtificalStatus = false;    
         }
         */
-
         tempstring = tempstring + idArtificalStatus + "\n";
         var returnArray = [tempstring, idArtificalStatus];
         return returnArray;
@@ -39,12 +33,11 @@ $(document).on('ready', function() {
 
 	var populateIDs = function(tagName) {
 	  	var idArray = [];
+        var classListArray = [];
 	  	var idCounter = Math.floor(Math.random()*20000) + 10000;
-	  	
 		fullTagObj = $(tagName).find('*');
 		fullTagObj.each(function() {
 		var id = $( this ).attr( "id" );
-
 		if (id !== undefined) {
 			if (typeof(id) === "string") {
 				$(this).addClass('mouse-here');
@@ -61,9 +54,11 @@ $(document).on('ready', function() {
 			idArray.push(idUse);
 			idCounter += 1;
 		}
+        var classListString = $( this ).attr("class");
+        classListArray.push(classListString);
 		});
 		console.log("ID's tagged");
-		return idArray;
+		return {idArray: idArray, classList:classListArray};
 	};
 
 	var formatTimeOfDay = function(millisSinceEpoch) {
@@ -81,55 +76,56 @@ $(document).on('ready', function() {
 		var tempDict = {};
 		for ( var i = 0; i < inList.length; i++ ) {
 			var idString = inList[ i ];
-			tempDict[ idString ] = initialValue;
+            if (typeof initialValue !== "object") {
+			    tempDict[ idString ] = initialValue;
+            }
+            else if (initialValue instanceof Array === true) {
+                /* var initialValueTemp = initialValue[ i ];  */
+			    tempDict[ idString ] = initialValue[ i ];
+            }
+            else {
+                alert("Initial value is weird, possibly an object that is not a list");
+            }                   
 		}
 		return tempDict;
 	};
 
-	var idTotalArray = populateIDs('body');
+	var populateIDOutput = populateIDs('body');
+    var idTotalArray = populateIDOutput.idArray;
+    var classListArrayTotal = populateIDOutput.classList;
 	var mouseInDict = createDictWithKeys(idTotalArray, 0);
 	var mouseEntryDict = createDictWithKeys(idTotalArray, 0);
+    var mouseClassDict = createDictWithKeys(idTotalArray, classListArrayTotal);
 	window.IDS = idTotalArray;
 	window.MDS = mouseInDict;
 	window.MDE = mouseEntryDict;
-    window.IDSstats = idValueStatus;
+    window.MCD = mouseClassDict;
 
 	$('.mouse-here').mouseenter( function() {
-	
 		var mouseEntryTimeNow = $.now();
-
 		var currentId = $(this).attr('id');
 		var totalTimeInArea = mouseInDict[ currentId ];
-
 		mouseEntryDict[ currentId ] = mouseEntryTimeNow;
-        var outPutString = 'Mouse arriving in: #' + currentId + "  Has been the area a total time: " + formatTimeOfDay(totalTimeInArea) + " s";
-		
+        var outPutString = 'Mouse arriving in: #' + currentId + "; Has been the area a total time: " + formatTimeOfDay(totalTimeInArea) + " s";
+        outPutString = outPutString + '; Class List: ' + mouseClassDict[ currentId ];
         var outArray = idValueStatus( currentId, outPutString );
         outPutString = outArray[ 0 ];
-
-		console.log(outPutString);
-		
+		if (consoleLogging === true) { console.log(outPutString) } 
 	});
 	
 	$('.mouse-here').mouseleave( function() {
-	
 		var currentTime = $.now();
 		var currentId = $(this).attr('id');
 		var mouseEntryTimeNow = mouseEntryDict[ currentId ];
 		var timeInArea = currentTime - mouseEntryTimeNow;
-		
 		var totalTimeInArea = mouseInDict[ currentId ];
 		var totalTimeInArea = totalTimeInArea + timeInArea;
 		mouseInDict[ currentId ] = totalTimeInArea;
-		
-		var outPutString = 'Mouse leaving: #' + currentId + "  Has been the area a total time: " + formatTimeOfDay(totalTimeInArea) + " s";
-
+		var outPutString = 'Mouse leaving: #' + currentId + "; Has been the area a total time: " + formatTimeOfDay(totalTimeInArea) + " s";
+        outPutString = outPutString + '; Class List: ' + mouseClassDict[ currentId ];
         var outArray = idValueStatus( currentId, outPutString );
         outPutString = outArray[ 0 ];
-
-		console.log(outPutString);
-	
+		if (consoleLogging === true) { console.log(outPutString) } 	
 	});
-
   
 });
