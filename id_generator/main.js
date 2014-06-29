@@ -3,7 +3,41 @@ $(document).on('ready', function() {
 	var startTime = $.now();
 	var startTImeBase = startTime;
 
-	var  = function(tagName) {
+	var findIDs = function(tagName) {
+	  	var idArray = [];
+		fullTagObj = $(tagName).find('*');
+		fullTagObj.each(function() {
+			var id = $( this ).attr( "id" );
+			if (typeof(id) === "string") {
+				idArray.push(id);
+			}
+		});
+		return idArray;
+	};
+
+    
+    var idValueStatus = function(id, tempstring) {
+
+        var idArtificalStatus;
+        var tempstring = tempstring + "    ;  Artifically created ID: ";
+
+        (id.slice(0,2) === 'zz')? (idArtificalStatus = true): (idArtificalStatus = false);
+
+        /*
+        if (id.slice(0,2) === 'zz')?  {
+            idArtificalStatus = true;
+        }
+        else {
+            idArtificalStatus = false;    
+        }
+        */
+
+        tempstring = tempstring + idArtificalStatus + "\n";
+        var returnArray = [tempstring, idArtificalStatus];
+        return returnArray;
+    };
+
+	var populateIDs = function(tagName) {
 	  	var idArray = [];
 	  	var idCounter = Math.floor(Math.random()*20000) + 10000;
 	  	
@@ -58,6 +92,7 @@ $(document).on('ready', function() {
 	window.IDS = idTotalArray;
 	window.MDS = mouseInDict;
 	window.MDE = mouseEntryDict;
+    window.IDSstats = idValueStatus;
 
 	$('.mouse-here').mouseenter( function() {
 	
@@ -67,8 +102,11 @@ $(document).on('ready', function() {
 		var totalTimeInArea = mouseInDict[ currentId ];
 
 		mouseEntryDict[ currentId ] = mouseEntryTimeNow;
+        var outPutString = 'Mouse arriving in: #' + currentId + "  Has been the area a total time: " + formatTimeOfDay(totalTimeInArea) + " s";
+		
+        var outArray = idValueStatus( currentId, outPutString );
+        outPutString = outArray[ 0 ];
 
-		var outPutString = 'Mouse arriving in: #' + currentId + "  Has been the area a total time: " + formatTimeOfDay(totalTimeInArea) + " s";
 		console.log(outPutString);
 		
 	});
@@ -85,6 +123,10 @@ $(document).on('ready', function() {
 		mouseInDict[ currentId ] = totalTimeInArea;
 		
 		var outPutString = 'Mouse leaving: #' + currentId + "  Has been the area a total time: " + formatTimeOfDay(totalTimeInArea) + " s";
+
+        var outArray = idValueStatus( currentId, outPutString );
+        outPutString = outArray[ 0 ];
+
 		console.log(outPutString);
 	
 	});
